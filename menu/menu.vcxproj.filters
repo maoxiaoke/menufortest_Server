@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="menu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="menuDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FileViewDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Duplex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusDisplayDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DuplexFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HalfDuplexDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemParameter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HalfDuplexFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TransRevShare.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="encode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ListenSocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Framing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="menu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="menuDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileViewDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Duplex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParameterSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusDisplayDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HalfDuplexDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="encode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TransRevShare.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemParameter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GetParameterValue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ListenSocket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSocket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Framing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="menu.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\menu.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\menu.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\file.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt10.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7295.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7297.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt6.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7296.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7291.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7292.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt8.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt21.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bbbb.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72916.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72917.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7283.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7281.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72915.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72911.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72918.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72910.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72923.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7287.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\7287.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72922.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\line7.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72913.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\72919.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jt24.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\line1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\ARROW1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\ARROW2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\LINE2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\LINE3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\lin4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\7295.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\7297.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\7291.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\72916.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\72915.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\menu\menu\res\72922.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

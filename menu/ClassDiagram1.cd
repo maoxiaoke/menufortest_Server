@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="CmenuDlg" Collapsed="true">
+    <Position X="3.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CmenuDlg::__unnamed_enum_000c_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>menuDlg.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAiAAAEAABQAAAEAAhQoAMAADKAAAAQIgAAAAAAQAAA=</HashCode>
+      <FileName>menuDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CParameterSet" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CParameterSet::__unnamed_enum_000e_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ParameterSet.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ECeAAAEAACABoAAgABAAQAAIUAABAEAAAADAAQBAAAA=</HashCode>
+      <FileName>ParameterSet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CStatusDisplayDlg" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CStatusDisplayDlg::__unnamed_enum_0011_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>StatusDisplayDlg.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CAKAAAEAAAAAQAAAABAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StatusDisplayDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDuplex" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CDuplex::__unnamed_enum_0002_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Duplex.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAQAAAAABAAAACAPAAigAAACAAEAAAAAAA=</HashCode>
+      <FileName>Duplex.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CHalfDuplexDlg" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CHalfDuplexDlg::__unnamed_enum_0007_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>HalfDuplexDlg.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACAAAEAAAAABAAAABAAAADAPwAAAAAACAAUEAAAAAA=</HashCode>
+      <FileName>HalfDuplexDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
