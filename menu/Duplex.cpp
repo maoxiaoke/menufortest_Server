@@ -5,7 +5,7 @@
 #include "menu.h"
 #include "Duplex.h"
 #include "afxdialogex.h"
-#include "DuplexFunction.h"
+//#include "DuplexFunction.h"
 #include "menuDlg.h"
 #include "TransRevShare.h"
 #include "SystemParameter.h"
@@ -51,7 +51,7 @@ void CDuplex::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDuplex, CDialogEx)
-	ON_BN_CLICKED(IDOK, &CDuplex::OnBnClickedOk)
+//	ON_BN_CLICKED(IDOK, &CDuplex::OnBnClickedOk)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
@@ -80,575 +80,114 @@ int CDuplex::StartRunDuplex(int a)
 	//LedFlag = 0;
 	StopFlag = 0;
 
+	SetLedOff(1);
+	Sleep(1000);
+	state_inactive = 1;   //初始状态
+	m_led1.SetBitmap(m_red);
+
 	hThread = CreateThread(NULL,
 												0,
 												(LPTHREAD_START_ROUTINE)ThreadFunc,
 												this,
 												0,
 												&ThreadID); //开辟一个线程
+												
 
+	//CWinThread * m_pThread;
+	//m_pThread = AfxBeginThread(ThreadFunc, this);
+	//if (NULL == m_pThread)
+	//{
+	//	TRACE("创建新的线程出错！\n");
+	//	return 0;
+	//}
+//	AfxBeginThread(ThreadFunc, NULL);
 	return 0; //定义的是有返回值的函数，所以需要return 0
 }
-void CDuplex::OnBnClickedOk()
-{
-	// TODO:  在此添加控件通知处理程序代码
-
-		hThread = CreateThread(NULL,
-			0,
-			(LPTHREAD_START_ROUTINE)ThreadFunc,
-			this,
-			0,
-			&ThreadID);
-
-	
-
-	/*
-	state_inactive = 0;
-	state_waithail = 0;
-	state_starthail = 0;
-	state_hailacquisition = 0;
-	state_haildirectives = 0;
-	state_hailtail = 0;
-	state_hailresponse = 0;
-	state_carrieronly = 0;
-	state_acquisition = 0;
-	state_duplexon = 0;
-	state_rnmdend = 0;
-	state_lnmdend = 0;
-	state_duplexend = 0;
-	state_terminatingtail = 0;
-	//LedFlag = 0;
-	StopFlag = 0;
-
-	//SetLedOff(1);
-	//	Sleep(1000);
-	while (StopFlag == 0)
-	{
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_inactive = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led1.SetBitmap(hBmp);
-			if (state_inactive == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_waithail = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led2.SetBitmap(hBmp);
-			if (state_waithail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_starthail = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led3.SetBitmap(hBmp);
-			if (state_starthail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_hailacquisition = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led4.SetBitmap(hBmp);
-			if (state_hailacquisition == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_haildirectives = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led5.SetBitmap(hBmp);
-			if (state_haildirectives == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_hailtail = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led6.SetBitmap(hBmp);
-			if (state_hailtail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_hailresponse = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led7.SetBitmap(hBmp);
-			if (state_hailresponse == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_carrieronly = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led8.SetBitmap(hBmp);
-			if (state_carrieronly == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_acquisition = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led9.SetBitmap(hBmp);
-			if (state_acquisition == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_duplexon = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led10.SetBitmap(hBmp);
-			if (state_duplexon == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_lnmdend = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led11.SetBitmap(hBmp);
-			if (state_lnmdend == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_rnmdend = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led12.SetBitmap(hBmp);
-			if (state_rnmdend == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_duplexend = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led13.SetBitmap(hBmp);
-			if (state_duplexend == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_terminatingtail = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			m_led14.SetBitmap(hBmp);
-			if (state_terminatingtail == 1) break;
-		}
-		break;
-	} */
-//	CDialogEx::OnOK();
-}
-
 
 void ThreadFunc(LPVOID lpParam)
 {
+	CDuplex *pDlg = (CDuplex *)lpParam;
+	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
 
-	//SetLedOff(1);
-	//	Sleep(1000);
-	CDuplex *pDlg = (CDuplex*) lpParam;
+	pDlg->DuplexState = 2;	//get in State-2 at the first start
 
-	while (StopFlag == 0)
+	while (1)
 	{
-		if (StopFlag == 1)
+		switch (pDlg->DuplexState)
 		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_inactive = 1;   //初始状态
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);
-			if (state_inactive == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_waithail = 1; //等待握手
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			if (state_waithail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		//循环
-		while (1)
-		{
-			if (Start_Hail_R == 1)
-			{
-				Start_Hail_R = 0;
-				break;
-			}
-			if (StopFlag == 1)
-			{
-				pDlg->SetLedOff(1);
-				break; //源代码写的return 0; ？？？有疑问
-			}
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_starthail = 1;  //开始载波同步
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			if (state_starthail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_hailacquisition = 1; //开始符号同步
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			if (state_hailacquisition == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_haildirectives = 1; //发送握手序列
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
+		case 2:
+			pDlg->state_waithail = 1;
+			pDlg->SystemTime();
 
-			//向客户机发送握手信号
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("等待握手响应\r\n"));
+			pDlg->m_led2.SetBitmap(pDlg->m_red);
+
+			while (1)
+			{
+				if (Start_Hail_R == 1)
+				{
+					Start_Hail_R = 0;
+					pDlg->DuplexState = 41;
+
+					break;
+				}
+				//if ()
+				//{
+				//	//超时
+				//}
+			}
+
+			//发送反馈
 			HallCommond = 1;
 			Hailresponse_T = 1;
-
+			
 			CommondGroup = SPDU_framing();
 			encodecommond(CommondGroup);
 			((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
-
+			
 			HallCommond = 0;
 			Hailresponse_T = 0;
-			//
-			if (state_haildirectives == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_hailtail = 1; //握手尾序列
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			if (state_hailtail == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_hailresponse = 1; //等待握手响应
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
 
-//			CString strTime;
-//			CTime tm;
-
-			//加上SystemTime.app 节省代码
-//			 SystemTime();  //调用获取系统时间函数
-
-//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
-			//	CmenuDlg *pDlg = (CmenuDlg*)AfxGetMainWnd();
-//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			tm = CTime::GetCurrentTime(); //获取系统当前时间
-//			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
-//			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("等待握手响应\r\n"));
-//			ppDlg->m_Hist.ReplaceSel( _T("等待握手响应\r\n"));
-
-			if (state_hailresponse == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
+			Sleep(200);
 			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_carrieronly = 1; //信道载波维持
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			if (state_carrieronly == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_acquisition = 1; //发送捕获序列
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			if (state_acquisition == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_duplexon = 1; //双向数据传递
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			pDlg->m_led10.SetBitmap(hBmp);
+		case 41:
+			pDlg->state_carrieronly = 1;
+			pDlg->SystemTime();
 
-			SystemTime();  //调用获取系统时间函数
-//			CString strTime;
-//			CTime tm;
-			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
 			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			tm = CTime::GetCurrentTime(); //获取系统当前时间
-//			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
-//			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("双向数据传递\r\n"));
-			ppDlg->m_Hist.ReplaceSel( _T("双向数据传递\r\n"));
+			ppDlg->m_Hist.ReplaceSel(_T("载波同步\r\n"));
+			pDlg->m_led8.SetBitmap(pDlg->m_red);
+			Sleep(1000);
 
-			if (state_duplexon == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
+			pDlg->DuplexState = 42;
 			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			/*************发送数据**************/
+		case 42:
+			pDlg->state_acquisition = 1;
+			pDlg->SystemTime();
+
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("发送空闲序列\r\n"));
+			pDlg->m_led9.SetBitmap(pDlg->m_red);
+			Sleep(400);
+
+			pDlg->DuplexState = 40;
+			break;
+		case 40:
+			pDlg->state_duplexon = 1;
+			pDlg->SystemTime();
+
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("双向数据传递\r\n"));
+			pDlg->m_led10.SetBitmap(pDlg->m_red);
+
 			pDlg->shuanggongsend();
-			
-			state_lnmdend = 1;  //本地发送完成
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			pDlg->m_led10.SetBitmap(hBmp);
-			pDlg->m_led11.SetBitmap(hBmp);
+
+			pDlg->state_lnmdend = 1;
+			pDlg->SystemTime();
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("本地发送完成\r\n"));
+			pDlg->m_led11.SetBitmap(pDlg->m_red);
 
 			SetControlParameters = 1;
 			RNMD_T = 1;
@@ -659,174 +198,524 @@ void ThreadFunc(LPVOID lpParam)
 			SetControlParameters = 0;
 			RNMD_T = 0;
 
-			SystemTime();  //调用获取系统时间函数
-//			CString strTime;
-//			CTime tm;
-			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+			//判断是否接收到远程无数据发送指令
+			while (1)
+			{
+				if (RNMD_R == 1)
+				{
+					RNMD_R = 0;
+					break;
+				}
+				/*	if ()
+				{
+				重连
+				}*/
+			}
+
+			pDlg->state_rnmdend = 1;
+			pDlg->SystemTime();
 			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			tm = CTime::GetCurrentTime(); //获取系统当前时间
-//			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
-//			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("本地发送完成\r\n"));
-			ppDlg->m_Hist.ReplaceSel(_T("本地发送完成\r\n"));
+			ppDlg->m_Hist.ReplaceSel(_T("远程发送完成\r\n"));
+			pDlg->m_led12.SetBitmap(pDlg->m_red);
 
-			if (state_lnmdend == 1)
-				lnmdsign = 1;
-				break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
+			pDlg->state_duplexend = 1;
+			pDlg->SystemTime();
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("数据发送完成\r\n"));
+			pDlg->m_led13.SetBitmap(pDlg->m_red);
+
+			pDlg->DuplexState = 45;
 			break;
-		}
-		//循环
-		while (1)
-		{
-			if (RNMD_R == 1)
-			{
-				RNMD_R = 0;
-				break;
-			}
-			if (StopFlag == 1)
-			{
-				pDlg->SetLedOff(1);
-				break;
-			}
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_rnmdend = 1;  //远程发送完成
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			pDlg->m_led10.SetBitmap(hBmp);
-			pDlg->m_led11.SetBitmap(hBmp);
-			pDlg->m_led12.SetBitmap(hBmp);
-
+		case 45:
+			pDlg->state_terminatingtail = 1;
+			pDlg->SystemTime();
+			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+			ppDlg->m_Hist.ReplaceSel(_T("发送尾序列\r\n"));
+			pDlg->m_led14.SetBitmap(pDlg->m_red);
+			Sleep(50);
+			break;
 			
-			SystemTime();  //调用获取系统时间函数
-//			CString strTime;
-//			CTime tm;
-			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
-			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			tm = CTime::GetCurrentTime(); //获取系统当前时间
-//			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
-//			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("远程发送完成\r\n"));
-			ppDlg->m_Hist.ReplaceSel( _T("远程发送完成\r\n"));
-
-			if (state_rnmdend == 1)
-				rnmdsign = 1;
-				break;
+		default:
+			break;
 		}
-		if (StopFlag == 1)
+		if (pDlg->state_terminatingtail == 1)
 		{
 			pDlg->SetLedOff(1);
 			break;
 		}
-		while (1)
-		{
-			Sleep(2000);
-			state_duplexend = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			pDlg->m_led10.SetBitmap(hBmp);
-			pDlg->m_led11.SetBitmap(hBmp);
-			pDlg->m_led12.SetBitmap(hBmp);
-			pDlg->m_led13.SetBitmap(hBmp);
-
-			SystemTime();  //调用获取系统时间函数
-//			CString strTime;
-//			CTime tm;
-			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
-			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			tm = CTime::GetCurrentTime(); //获取系统当前时间
-//			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
-//			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("数据传递成功\r\n"));
-			ppDlg->m_Hist.ReplaceSel( _T("数据传递成功\r\n"));
-
-			if (state_duplexend == 1) break;
-		}
-		if (StopFlag == 1)
-		{
-			pDlg->SetLedOff(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(2000);
-			state_terminatingtail = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
-			pDlg->m_led2.SetBitmap(hBmp);
-			pDlg->m_led3.SetBitmap(hBmp);
-			pDlg->m_led4.SetBitmap(hBmp);
-			pDlg->m_led5.SetBitmap(hBmp);
-			pDlg->m_led6.SetBitmap(hBmp);
-			pDlg->m_led7.SetBitmap(hBmp);
-			pDlg->m_led8.SetBitmap(hBmp);
-			pDlg->m_led9.SetBitmap(hBmp);
-			pDlg->m_led10.SetBitmap(hBmp);
-			pDlg->m_led11.SetBitmap(hBmp);
-			pDlg->m_led12.SetBitmap(hBmp);
-			pDlg->m_led13.SetBitmap(hBmp);
-			pDlg->m_led14.SetBitmap(hBmp);
-			if (state_terminatingtail == 1) break;
-		}
-		Sleep(2000);
-		pDlg->SetLedOff(1); //将LED灯置黑
-		break;
 	}
 }
+//UINT ThreadFunc(LPVOID lpParam)
+//void ThreadFunc(LPVOID lpParam)
+//{
+//
+//	//SetLedOff(1);
+//	//	Sleep(1000);
+//	CDuplex *pDlg = (CDuplex*) lpParam;
+//
+//	while (StopFlag == 0)
+//	{
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_inactive = 1;   //初始状态
+//			CBitmap bitmap;
+//			HBITMAP hBmp;//位图句柄
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);
+//			if (state_inactive == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_waithail = 1; //等待握手
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			if (state_waithail == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		//循环
+//		while (1)
+//		{
+//			if (Start_Hail_R == 1)
+//			{
+//				Start_Hail_R = 0;
+//				break;
+//			}
+//			if (StopFlag == 1)
+//			{
+//				pDlg->SetLedOff(1);
+//				break; //源代码写的return 0; ？？？有疑问
+//			}
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_starthail = 1;  //开始载波同步
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			if (state_starthail == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_hailacquisition = 1; //开始符号同步
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			if (state_hailacquisition == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_haildirectives = 1; //发送握手序列
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//
+//			//向客户机发送握手信号
+//			HallCommond = 1;
+//			Hailresponse_T = 1;
+//
+//			CommondGroup = SPDU_framing();
+//			encodecommond(CommondGroup);
+//			((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
+//
+//			HallCommond = 0;
+//			Hailresponse_T = 0;
+//			//
+//			if (state_haildirectives == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_hailtail = 1; //握手尾序列
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			if (state_hailtail == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_hailresponse = 1; //等待握手响应
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//
+////			CString strTime;
+////			CTime tm;
+//
+//			//加上SystemTime.app 节省代码
+////			 SystemTime();  //调用获取系统时间函数
+//
+////			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+//			//	CmenuDlg *pDlg = (CmenuDlg*)AfxGetMainWnd();
+////			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+////			tm = CTime::GetCurrentTime(); //获取系统当前时间
+////			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
+////			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("等待握手响应\r\n"));
+////			ppDlg->m_Hist.ReplaceSel( _T("等待握手响应\r\n"));
+//
+//			if (state_hailresponse == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_carrieronly = 1; //信道载波维持
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			if (state_carrieronly == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_acquisition = 1; //发送捕获序列
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			if (state_acquisition == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_duplexon = 1; //双向数据传递
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			pDlg->m_led10.SetBitmap(hBmp);
+//
+//			SystemTime();  //调用获取系统时间函数
+////			CString strTime;
+////			CTime tm;
+//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+////			tm = CTime::GetCurrentTime(); //获取系统当前时间
+////			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
+////			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("双向数据传递\r\n"));
+//			ppDlg->m_Hist.ReplaceSel( _T("双向数据传递\r\n"));
+//
+//			if (state_duplexon == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			/*************发送数据**************/
+//			pDlg->shuanggongsend();
+//			
+//			state_lnmdend = 1;  //本地发送完成
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			pDlg->m_led10.SetBitmap(hBmp);
+//			pDlg->m_led11.SetBitmap(hBmp);
+//
+//			SetControlParameters = 1;
+//			RNMD_T = 1;
+//			CommondGroup = SPDU_framing();
+//			encodecommond(CommondGroup);
+//			//向主动方发送远程发送完成指令
+//			((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
+//			SetControlParameters = 0;
+//			RNMD_T = 0;
+//
+//			SystemTime();  //调用获取系统时间函数
+////			CString strTime;
+////			CTime tm;
+//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+////			tm = CTime::GetCurrentTime(); //获取系统当前时间
+////			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
+////			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("本地发送完成\r\n"));
+//			ppDlg->m_Hist.ReplaceSel(_T("本地发送完成\r\n"));
+//
+//			if (state_lnmdend == 1)
+//				lnmdsign = 1;
+//				break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		//循环
+//		while (1)
+//		{
+//			if (RNMD_R == 1)
+//			{
+//				RNMD_R = 0;
+//				break;
+//			}
+//			if (StopFlag == 1)
+//			{
+//				pDlg->SetLedOff(1);
+//				break;
+//			}
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_rnmdend = 1;  //远程发送完成
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			pDlg->m_led10.SetBitmap(hBmp);
+//			pDlg->m_led11.SetBitmap(hBmp);
+//			pDlg->m_led12.SetBitmap(hBmp);
+//
+//			
+//			SystemTime();  //调用获取系统时间函数
+////			CString strTime;
+////			CTime tm;
+//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+////			tm = CTime::GetCurrentTime(); //获取系统当前时间
+////			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
+////			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("远程发送完成\r\n"));
+//			ppDlg->m_Hist.ReplaceSel( _T("远程发送完成\r\n"));
+//
+//			if (state_rnmdend == 1)
+//				rnmdsign = 1;
+//				break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_duplexend = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			pDlg->m_led10.SetBitmap(hBmp);
+//			pDlg->m_led11.SetBitmap(hBmp);
+//			pDlg->m_led12.SetBitmap(hBmp);
+//			pDlg->m_led13.SetBitmap(hBmp);
+//
+//			SystemTime();  //调用获取系统时间函数
+////			CString strTime;
+////			CTime tm;
+//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			//AfxGetMainWnd被应用程序主线程调用，它根据以上规则返回应用程序的主窗口。如果该函数被应用程序的次线程调用，该函数返回与引起该调用线程连接的主窗口
+//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+////			tm = CTime::GetCurrentTime(); //获取系统当前时间
+////			strTime = tm.Format("%Y.%m.%d %X"); //格式转换
+////			ppDlg->m_Hist.ReplaceSel(strTime + "\r\n" + _T("数据传递成功\r\n"));
+//			ppDlg->m_Hist.ReplaceSel( _T("数据传递成功\r\n"));
+//
+//			if (state_duplexend == 1) break;
+//		}
+//		if (StopFlag == 1)
+//		{
+//			pDlg->SetLedOff(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(2000);
+//			state_terminatingtail = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);			//解决tab页切换时灯没有的问题
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			pDlg->m_led5.SetBitmap(hBmp);
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			pDlg->m_led8.SetBitmap(hBmp);
+//			pDlg->m_led9.SetBitmap(hBmp);
+//			pDlg->m_led10.SetBitmap(hBmp);
+//			pDlg->m_led11.SetBitmap(hBmp);
+//			pDlg->m_led12.SetBitmap(hBmp);
+//			pDlg->m_led13.SetBitmap(hBmp);
+//			pDlg->m_led14.SetBitmap(hBmp);
+//			if (state_terminatingtail == 1) break;
+//		}
+//		Sleep(2000);
+//		pDlg->SetLedOff(1); //将LED灯置黑
+//		break;
+//	}
+//	//return 0;
+//}
 
 
 int CDuplex::SetLedOff(int a)
 {
 	//	state_inactive = 0;
-	CBitmap bitmap;
-	HBITMAP hBmp;
-	bitmap.LoadBitmap(IDB_BITMAP_GREY);
-	hBmp = (HBITMAP)bitmap.GetSafeHandle();
-	m_led1.SetBitmap(hBmp);
-	m_led2.SetBitmap(hBmp);
-	m_led3.SetBitmap(hBmp);
-	m_led4.SetBitmap(hBmp);
-	m_led5.SetBitmap(hBmp);
-	m_led6.SetBitmap(hBmp);
-	m_led7.SetBitmap(hBmp);
-	m_led8.SetBitmap(hBmp);
-	m_led9.SetBitmap(hBmp);
-	m_led10.SetBitmap(hBmp);
-	m_led11.SetBitmap(hBmp);
-	m_led12.SetBitmap(hBmp);
-	m_led13.SetBitmap(hBmp);
-	m_led14.SetBitmap(hBmp);
+	m_led1.SetBitmap(m_grey);
+	m_led2.SetBitmap(m_grey);
+	m_led3.SetBitmap(m_grey);
+	m_led4.SetBitmap(m_grey);
+	m_led5.SetBitmap(m_grey);
+	m_led6.SetBitmap(m_grey);
+	m_led7.SetBitmap(m_grey);
+	m_led8.SetBitmap(m_grey);
+	m_led9.SetBitmap(m_grey);
+	m_led10.SetBitmap(m_grey);
+	m_led11.SetBitmap(m_grey);
+	m_led12.SetBitmap(m_grey);
+	m_led13.SetBitmap(m_grey);
+	m_led14.SetBitmap(m_grey);
 	return 0;
 }
 
@@ -1251,7 +1140,7 @@ void CDuplex::OnPaint()
 // Description      :  获取系统时间并显示
 //
 /*=================================*/
-void SystemTime()
+void CDuplex::SystemTime()
 {
 	CString strTime;
 	CTime tm;
@@ -1403,4 +1292,35 @@ void CDuplex::arqsend(int framecounter)
 		break;
 
 	}
+}
+
+
+BOOL CDuplex::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// TODO:  Add extra initialization here
+	m_grey = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP_GREY));
+	m_red = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP_RED));
+	//AfxGetInstanceHandle():This function allows you to retrieve (取回) the instance handle of the current application.
+	//MAKEINTRESOURCE macro (宏):Converts an integer value to a resource type compatible with the resource-management functions. This macro is used in place of a string containing the name of the resource.
+
+	/*********初始led灯为灰色**********/
+	m_led1.SetBitmap(m_grey);
+	m_led2.SetBitmap(m_grey);
+	m_led3.SetBitmap(m_grey);
+	m_led4.SetBitmap(m_grey);
+	m_led5.SetBitmap(m_grey);
+	m_led6.SetBitmap(m_grey);
+	m_led7.SetBitmap(m_grey);
+	m_led8.SetBitmap(m_grey);
+	m_led9.SetBitmap(m_grey);
+	m_led10.SetBitmap(m_grey);
+	m_led11.SetBitmap(m_grey);
+	m_led12.SetBitmap(m_grey);
+	m_led13.SetBitmap(m_grey);
+	m_led14.SetBitmap(m_grey);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
