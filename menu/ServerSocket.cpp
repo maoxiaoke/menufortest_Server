@@ -43,6 +43,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 		PE[i] = szTemp[i];
 	}
 
+
 	if (datalen <= 232)
 	{
 		if (*(PE + 64) == 0)
@@ -108,7 +109,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 						commondstate = 1;
 						ArqGroup = PLCW_framing(NeedSerialNumber);
 						encodearq(ArqGroup);
-						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
+						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessagepro(P_Data_CC, Len_DataInProcess);
 						break;
 					}
 				}
@@ -135,7 +136,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 						commondstate = 1;
 						ArqGroup = PLCW_framing(NeedSerialNumber);
 						encodearq(ArqGroup);
-						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
+						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessagepro(P_Data_CC, Len_DataInProcess);
 						break;
 					}
 				}
@@ -162,7 +163,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 						commondstate = 1;
 						ArqGroup = PLCW_framing(NeedSerialNumber);
 						encodearq(ArqGroup);
-						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessage(P_Data_CC, Len_DataInProcess);
+						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessagepro(P_Data_CC, Len_DataInProcess);
 						break;
 					}
 				}

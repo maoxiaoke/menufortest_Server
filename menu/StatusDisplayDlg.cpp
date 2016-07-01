@@ -59,14 +59,14 @@ void CStatusDisplayDlg::OnPaint()
 	dc.SelectObject(&brush[0]); //将画刷选入dc
 	dc.SelectObject(&pen[0]);  //将画笔选入dc
 	dc.SetBkMode(TRANSPARENT); //设置背景模式为透明，也可以使用SetBkColor设置背景色
-	dc.Rectangle(15, 30, 500, 320); //创建一个透明的文本框
+	dc.Rectangle(15, 20, 500, 310); //创建一个透明的文本框
 	//pen[0].DeleteObject(); //释放dc
 	//brush[0].DeleteObject();  //注释掉这个为什么也可以？难道用完就释放了
 
 	pen[1].CreatePen(PS_DASHDOT, 1, RGB(0, 0, 255)); //创建初始化画笔
 	dc.SelectObject(&pen[1]);  //将画刷选入dc
-	dc.MoveTo(15, 175); //画直线
-	dc.LineTo(500, 175); //画直线
+	dc.MoveTo(15, 165); //画直线
+	dc.LineTo(500, 165); //画直线
 	//	pen[1].DeleteObject();
 
 	pen[2].CreatePen(PS_DASHDOT, 1, RGB(0, 0, 255)); //创建初始化画笔
@@ -74,7 +74,7 @@ void CStatusDisplayDlg::OnPaint()
 	dc.SelectObject(&brush[1]); //将画刷选入dc
 	dc.SelectObject(&pen[2]);  //将画笔选入dc
 	dc.SetBkMode(TRANSPARENT); //设置背景模式为透明，也可以使用SetBkColor设置背景色
-	dc.Rectangle(15, 328, 500, 440); //创建一个透明的文本框
+	dc.Rectangle(15, 318, 500, 430); //创建一个透明的文本框
 	//pen[2].DeleteObject(); //释放dc
 	//brush[1].DeleteObject();  //注释掉这个为什么也可以？难道用完就释放了
 

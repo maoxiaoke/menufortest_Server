@@ -48,6 +48,7 @@ public:
 
 	HBITMAP m_grey;  // 添加句柄变量
 	HBITMAP m_red;
+	CFont font;
 
 
 protected:
@@ -82,4 +83,5 @@ public:
 
 	int DuplexState;			//当前全双工状态
 	virtual BOOL OnInitDialog();
+	UINT oldTickCount, newTickCount;
 };

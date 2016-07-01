@@ -144,7 +144,7 @@ int* SET_CONTROL(void)
 		*(Set_Parameters1 + i) = 0; //初始化控制设置参数
 	}
 	*(Set_Parameters1 + 15) = 1;
-	*(Set_Parameters1 + 11) = RNMD_T;
+	*(Set_Parameters1 + 11) = 1;
 	return Set_Parameters1;
 }
 
@@ -267,8 +267,10 @@ void UNFRAMING(int *P_Frame, int len)
 		case 4:
 			break;
 		case 5:
-			if (*(ProtocolData) == 1)
+			if (1 == *ProtocolData)
+			{
 				Start_Hail_R = 1;
+			}				
 			if (*(ProtocolData + 1) == 1)
 				Hailresponse_R = 1;
 			if (*(ProtocolData + 2) == 1)

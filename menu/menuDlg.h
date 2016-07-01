@@ -94,7 +94,7 @@ public:
 	CButton m_ListenButton;
 	CButton m_ListenEndButton;
 
-	void SendMessage(int *P_SE, int fLen); //发送消息
+	void SendMessagepro(int *P_SE, int fLen); //发送消息
 	CString m_sWords;
 //	afx_msg void OnBnClickedSendButton();
 	afx_msg void OnSendmail();
@@ -102,4 +102,6 @@ public:
 	afx_msg void OnParaset();
 
 	CFont font;
+	afx_msg void OnLogout();
+	afx_msg void OnBnClickedCleanupButton();
 };
