@@ -418,9 +418,13 @@ void CSimplexDlg::SystemTime()
 BOOL CSimplexDlg::OnInitDialog()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CDialogEx::OnInitDialog();
 =======
 	CDialogExnInitDialog();
+>>>>>>> dev
+=======
+	CDialogEx::OnInitDialog();
 >>>>>>> dev
 
 	// TODO:  Add extra initialization here
