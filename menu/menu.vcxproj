@@ -105,7 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Duplex.h" />
-    <ClInclude Include="DuplexFunction.h" />
     <ClInclude Include="encode.h" />
     <ClInclude Include="FileViewDlg.h" />
     <ClInclude Include="Framing.h" />
@@ -118,7 +117,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ServerSocket.h" />
     <ClInclude Include="SimplexDlg.h" />
-    <ClInclude Include="SimplexFunction.h" />
     <ClInclude Include="StatusDisplayDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SystemParameter.h" />
