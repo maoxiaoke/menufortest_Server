@@ -36,7 +36,6 @@ public:
 
 	int SetLedOff(int a);
 	int StartRunSimplex(int a);
-<<<<<<< HEAD
 
 	void SystemTime(); //获取系统时间
 	UINT oldTickCount, newTickCount;
@@ -44,15 +43,7 @@ public:
 	HBITMAP m_red;
 	CFont font;
 
-=======
-	UINT oldTickCount, newTickCount;
-	HBITMAP m_grey;  // 添加句柄变量
-	HBITMAP m_red;
 
-	CFont font;
-
-	void SystemTime(); //获取系统时间
->>>>>>> dev
 //	void dangongsend();
 
 	CParameterSet *psSDlg;
@@ -78,10 +69,7 @@ public:
 	int state_rnmdendR;
 	int state_simplexrendR;
 	int state_terminatingtailR;
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
 	int StopFlagS;
 	virtual BOOL OnInitDialog();
 };
