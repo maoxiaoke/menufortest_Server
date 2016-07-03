@@ -73,7 +73,7 @@ void CHalfDuplexDlg::OnPaint()
 	dc.SelectObject(&brush); //将画刷选入dc
 	dc.SelectObject(&pen);  //将画笔选入dc
 	dc.SetBkMode(TRANSPARENT); //设置背景模式为透明，也可以使用SetBkColor设置背景色
-	dc.Rectangle(15, 30, 500, 420); //创建一个透明的文本框
+	dc.Rectangle(15, 20, 500, 430); //创建一个透明的文本框
 }
 
 

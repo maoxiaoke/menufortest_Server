@@ -96,7 +96,10 @@ int CSimplexDlg::StartRunSimplex(int a)
 }
 int CSimplexDlg::SetLedOff(int a)
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 	m_led1.SetBitmap(m_grey);
 	m_led2.SetBitmap(m_grey);
 	m_led3.SetBitmap(m_grey);
@@ -120,7 +123,10 @@ void ThreadFuncS(LPVOID lpParam)
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
 		ppDlg->m_Hist.ReplaceSel(_T("Waiting for Hail.\r\n"));
 		pDlg->m_led2.SetBitmap(pDlg->m_red);
+<<<<<<< HEAD
 		Sleep(1000);
+=======
+>>>>>>> dev
 
 		pDlg->oldTickCount = GetTickCount();
 		while (1)
@@ -133,6 +139,10 @@ void ThreadFuncS(LPVOID lpParam)
 			}
 			if ((pDlg->newTickCount - pDlg->oldTickCount) >= 60000)
 			{
+<<<<<<< HEAD
+=======
+				//?
+>>>>>>> dev
 				break;
 			}
 		}
@@ -140,16 +150,28 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->state_acquisitionR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+<<<<<<< HEAD
 		ppDlg->m_Hist.ReplaceSel(_T("Receiving Hail Acquisition.\r\n"));
 		pDlg->m_led3.SetBitmap(pDlg->m_red);
 		Sleep(500);
+=======
+		ppDlg->m_Hist.ReplaceSel(_T("Receive Hail Acquisition.\r\n"));
+		pDlg->m_led3.SetBitmap(pDlg->m_red);
+		Sleep(1000);
+>>>>>>> dev
 
 		pDlg->state_simplexronR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+<<<<<<< HEAD
 		ppDlg->m_Hist.ReplaceSel(_T("Data Service Receive.\r\n"));
 		pDlg->m_led4.SetBitmap(pDlg->m_red);
 //		Sleep(1000);
+=======
+		ppDlg->m_Hist.ReplaceSel(_T("Data Server Receive.\r\n"));
+		pDlg->m_led4.SetBitmap(pDlg->m_red);
+//		Sleep(2000);
+>>>>>>> dev
 
 		pDlg->oldTickCount = GetTickCount();
 		while (1)
@@ -164,16 +186,28 @@ void ThreadFuncS(LPVOID lpParam)
 			{
 				break;
 			}
+
 		}
+<<<<<<< HEAD
 		pDlg->state_rnmdendR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
 		ppDlg->m_Hist.ReplaceSel(_T("Receive RNMD.\r\n"));
 		pDlg->m_led5.SetBitmap(pDlg->m_red);
+=======
+
+		pDlg->state_rnmdendR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Receive RNMD\r\n"));
+		pDlg->m_led5.SetBitmap(pDlg->m_red);
+//		Sleep(2000);
+>>>>>>> dev
 
 		pDlg->state_simplexrendR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+<<<<<<< HEAD
 		ppDlg->m_Hist.ReplaceSel(_T("Data Service End.\r\n"));
 		pDlg->m_led6.SetBitmap(pDlg->m_red);
 		Sleep(2000);
@@ -185,12 +219,31 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->m_led7.SetBitmap(pDlg->m_red);
 
 		Sleep(2000);
+=======
+		ppDlg->m_Hist.ReplaceSel(_T("Data Service End\r\n"));
+		pDlg->m_led6.SetBitmap(pDlg->m_red);
+		Sleep(2000);
+
+		pDlg->state_terminatingtailR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Terminating Tail\r\n"));
+		pDlg->m_led7.SetBitmap(pDlg->m_red);
+
+		Sleep(2000);
+>>>>>>> dev
 		pDlg->SetLedOff(1);
 
 		break;
-	}
-}
 
+		
+	}
+
+}
+<<<<<<< HEAD
+
+=======
+>>>>>>> dev
 //void ThreadFuncS(LPVOID lpParam)
 //{
 //	CSimplexDlg *pDlg = (CSimplexDlg*)lpParam;
@@ -364,7 +417,11 @@ void CSimplexDlg::SystemTime()
 
 BOOL CSimplexDlg::OnInitDialog()
 {
+<<<<<<< HEAD
 	CDialogEx::OnInitDialog();
+=======
+	CDialogExnInitDialog();
+>>>>>>> dev
 
 	// TODO:  Add extra initialization here
 	font.CreatePointFont(110, _T("微软雅黑")); //创建字体样式，传递110请求11点字体
