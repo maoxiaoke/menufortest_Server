@@ -6,7 +6,6 @@
 #include "StatusDisplayDlg.h"
 
 void ThreadFuncS(LPVOID lpParam); //类外声明线程函数
-void SystemTimeS(); //获取系统时间
 
 // CSimplexDlg 对话框
 
@@ -35,8 +34,15 @@ public:
 	CStatic m_led6;
 	CStatic m_led7;
 
-	int SetLedOffS(int a);
+	int SetLedOff(int a);
 	int StartRunSimplex(int a);
+	UINT oldTickCount, newTickCount;
+	HBITMAP m_grey;  // 添加句柄变量
+	HBITMAP m_red;
+
+	CFont font;
+
+	void SystemTime(); //获取系统时间
 //	void dangongsend();
 
 	CParameterSet *psSDlg;
@@ -47,4 +53,22 @@ public:
 protected:
 	HANDLE hThread; //线程句柄
 	DWORD ThreadID; //线程ID
+
+public:
+	int state_inactiveR;
+	int state_waithailR;
+	int state_hailacquisitionR;
+	int state_haildirectivesR;
+	int state_hailtailR;
+	int state_hailresponseR;
+	int state_carrieronlyR;
+	int state_acquisitionR;
+	int state_simplexronR;
+	int state_lnmdendR;
+	int state_rnmdendR;
+	int state_simplexrendR;
+	int state_terminatingtailR;
+
+	int StopFlagS;
+	virtual BOOL OnInitDialog();
 };

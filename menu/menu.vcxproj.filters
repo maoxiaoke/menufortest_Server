@@ -45,9 +45,6 @@
     <ClInclude Include="StatusDisplayDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DuplexFunction.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="HalfDuplexDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -73,9 +70,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SimplexDlg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SimplexFunction.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

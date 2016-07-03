@@ -136,6 +136,7 @@ void ThreadFunc(LPVOID lpParam)
 				}
 				if ((pDlg->newTickCount - pDlg->oldTickCount) >= 60000)
 				{
+					//£¿£¿£¿quit the program
 					break;
 				}
 			}

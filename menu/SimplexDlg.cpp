@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "SimplexDlg.h"
 #include "afxdialogex.h"
-#include "SimplexFunction.h"
+//#include "SimplexFunction.h"
 #include "TransRevShare.h"
 #include "SystemParameter.h"
 #include "menuDlg.h"
@@ -57,7 +57,7 @@ void CSimplexDlg::OnPaint()
 	dc.SelectObject(&brush); //将画刷选入dc
 	dc.SelectObject(&pen);  //将画笔选入dc
 	dc.SetBkMode(TRANSPARENT); //设置背景模式为透明，也可以使用SetBkColor设置背景色
-	dc.Rectangle(15, 10, 500, 470); //创建一个透明的文本框
+	dc.Rectangle(15, 20, 500, 430); //创建一个透明的文本框
 
 	// 不为绘图消息调用 CDialogEx::OnPaint()
 }
@@ -80,6 +80,11 @@ int CSimplexDlg::StartRunSimplex(int a)
 
 	int StopFlagS = 0;
 
+	SetLedOff(1);
+	Sleep(1000);
+	state_inactiveR = 1;   //初始状态
+	m_led1.SetBitmap(m_red);
+
 	hThread = CreateThread(NULL,
 		0,
 		(LPTHREAD_START_ROUTINE)ThreadFuncS,
@@ -89,19 +94,15 @@ int CSimplexDlg::StartRunSimplex(int a)
 
 	return 0; //定义的是有返回值的函数，所以需要return 0
 }
-int CSimplexDlg::SetLedOffS(int a)
+int CSimplexDlg::SetLedOff(int a)
 {
-	CBitmap bitmap;
-	HBITMAP hBmp;
-	bitmap.LoadBitmap(IDB_BITMAP_GREY);
-	hBmp = (HBITMAP)bitmap.GetSafeHandle();
-	m_led1.SetBitmap(hBmp);
-	m_led2.SetBitmap(hBmp);
-	m_led3.SetBitmap(hBmp);
-	m_led4.SetBitmap(hBmp);
-	m_led5.SetBitmap(hBmp);
-	m_led6.SetBitmap(hBmp);
-	m_led7.SetBitmap(hBmp);
+	m_led1.SetBitmap(m_grey);
+	m_led2.SetBitmap(m_grey);
+	m_led3.SetBitmap(m_grey);
+	m_led4.SetBitmap(m_grey);
+	m_led5.SetBitmap(m_grey);
+	m_led6.SetBitmap(m_grey);
+	m_led7.SetBitmap(m_grey);
 
 
 	return 0;
@@ -109,160 +110,248 @@ int CSimplexDlg::SetLedOffS(int a)
 void ThreadFuncS(LPVOID lpParam)
 {
 	CSimplexDlg *pDlg = (CSimplexDlg*)lpParam;
-	while (StopFlagS == 0)
-	{
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_inactiveR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led1.SetBitmap(hBmp);
-			if (state_inactiveR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_waithailR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led2.SetBitmap(hBmp);
-			if (state_waithailR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
+	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
 
+	while (1)
+	{
+		pDlg->state_waithailR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Waiting for Hail.\r\n"));
+		pDlg->m_led2.SetBitmap(pDlg->m_red);
+
+		pDlg->oldTickCount = GetTickCount();
 		while (1)
 		{
-			if (CarrierSend_R == 1)
+			pDlg->newTickCount = GetTickCount();
+			if (CarrierSend_R)
 			{
 				CarrierSend_R = 0;
 				break;
 			}
-			if (StopFlagS == 1)
+			if ((pDlg->newTickCount - pDlg->oldTickCount) >= 60000)
 			{
-				pDlg->SetLedOffS(1);
-				return;
+				//?
+				break;
 			}
 		}
 
+		pDlg->state_acquisitionR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Receive Hail Acquisition.\r\n"));
+		pDlg->m_led3.SetBitmap(pDlg->m_red);
+		Sleep(1000);
+
+		pDlg->state_simplexronR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Data Server Receive.\r\n"));
+		pDlg->m_led4.SetBitmap(pDlg->m_red);
+//		Sleep(2000);
+
+		pDlg->oldTickCount = GetTickCount();
 		while (1)
 		{
-			Sleep(1000);
-			state_acquisitionR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led3.SetBitmap(hBmp);
-			if (state_acquisitionR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_simplexronR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led4.SetBitmap(hBmp);
-			if (state_simplexronR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			if (RNMD_R == 1)
+			pDlg->newTickCount = GetTickCount();
+			if (RNMD_R)
 			{
 				RNMD_R = 0;
 				break;
 			}
-			if (StopFlagS == 1)
+			if ((pDlg->newTickCount - pDlg->oldTickCount) >= 120000)
 			{
-				pDlg->SetLedOffS(1);
-				return;
+				break;
 			}
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_rnmdendR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led5.SetBitmap(hBmp);
 
-			SystemTimeS();  //调用获取系统时间函数
-			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-			ppDlg->m_Hist.ReplaceSel(_T("数据接收成功\r\n"));
+		}
 
-			if (state_rnmdendR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_simplexrendR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led6.SetBitmap(hBmp);
-			if (state_simplexrendR == 1) break;
-		}
-		if (StopFlagS == 1)
-		{
-			pDlg->SetLedOffS(1);
-			break;
-		}
-		while (1)
-		{
-			Sleep(1000);
-			state_terminatingtailR = 1;
-			CBitmap bitmap;
-			HBITMAP hBmp;
-			bitmap.LoadBitmap(IDB_BITMAP_RED);
-			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-			pDlg->m_led7.SetBitmap(hBmp);
-			if (state_terminatingtailR == 1) break;
-		}
+		pDlg->state_rnmdendR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Receive RNMD\r\n"));
+		pDlg->m_led5.SetBitmap(pDlg->m_red);
+//		Sleep(2000);
+
+		pDlg->state_simplexrendR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Data Service End\r\n"));
+		pDlg->m_led6.SetBitmap(pDlg->m_red);
 		Sleep(2000);
-		pDlg->SetLedOffS(1); //将LED灯置黑
+
+		pDlg->state_terminatingtailR = 1;
+		pDlg->SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Terminating Tail\r\n"));
+		pDlg->m_led7.SetBitmap(pDlg->m_red);
+
+		Sleep(2000);
+		pDlg->SetLedOff(1);
+
 		break;
+
+		
 	}
+
 }
-void SystemTimeS()
+//void ThreadFuncS(LPVOID lpParam)
+//{
+//	CSimplexDlg *pDlg = (CSimplexDlg*)lpParam;
+//	while (StopFlagS == 0)
+//	{
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_inactiveR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led1.SetBitmap(hBmp);
+//			if (state_inactiveR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_waithailR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led2.SetBitmap(hBmp);
+//			if (state_waithailR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//
+//		while (1)
+//		{
+//			if (CarrierSend_R == 1)
+//			{
+//				CarrierSend_R = 0;
+//				break;
+//			}
+//			if (StopFlagS == 1)
+//			{
+//				pDlg->SetLedOffS(1);
+//				return;
+//			}
+//		}
+//
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_acquisitionR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led3.SetBitmap(hBmp);
+//			if (state_acquisitionR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_simplexronR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led4.SetBitmap(hBmp);
+//			if (state_simplexronR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			if (RNMD_R == 1)
+//			{
+//				RNMD_R = 0;
+//				break;
+//			}
+//			if (StopFlagS == 1)
+//			{
+//				pDlg->SetLedOffS(1);
+//				return;
+//			}
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_rnmdendR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led5.SetBitmap(hBmp);
+//
+//			SystemTimeS();  //调用获取系统时间函数
+//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+//			ppDlg->m_Hist.ReplaceSel(_T("数据接收成功\r\n"));
+//
+//			if (state_rnmdendR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_simplexrendR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led6.SetBitmap(hBmp);
+//			if (state_simplexrendR == 1) break;
+//		}
+//		if (StopFlagS == 1)
+//		{
+//			pDlg->SetLedOffS(1);
+//			break;
+//		}
+//		while (1)
+//		{
+//			Sleep(1000);
+//			state_terminatingtailR = 1;
+//			CBitmap bitmap;
+//			HBITMAP hBmp;
+//			bitmap.LoadBitmap(IDB_BITMAP_RED);
+//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
+//			pDlg->m_led7.SetBitmap(hBmp);
+//			if (state_terminatingtailR == 1) break;
+//		}
+//		Sleep(2000);
+//		pDlg->SetLedOffS(1); //将LED灯置黑
+//		break;
+//	}
+//}
+void CSimplexDlg::SystemTime()
 {
 	CString strTime;
 	CTime tm;
@@ -274,4 +363,30 @@ void SystemTimeS()
 	ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
 	ppDlg->m_Hist.ReplaceSel(strTime + "\r\n");
 	//	return strTime;
+}
+
+
+BOOL CSimplexDlg::OnInitDialog()
+{
+	CDialogExnInitDialog();
+
+	// TODO:  Add extra initialization here
+	font.CreatePointFont(110, _T("微软雅黑")); //创建字体样式，传递110请求11点字体
+	GetDlgItem(IDC_SIMPLEXPROCEDURES_STATIC)->SetFont(&font); //将字体传递给静态框
+
+	m_grey = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP_GREY));
+	m_red = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP_RED));
+	//AfxGetInstanceHandle():This function allows you to retrieve (取回) the instance handle of the current application.
+	//MAKEINTRESOURCE macro (宏):Converts an integer value to a resource type compatible with the resource-management functions. This macro is used in place of a string containing the name of the resource.
+	/*********初始led灯为灰色**********/
+	m_led1.SetBitmap(m_grey);
+	m_led2.SetBitmap(m_grey);
+	m_led3.SetBitmap(m_grey);
+	m_led4.SetBitmap(m_grey);
+	m_led5.SetBitmap(m_grey);
+	m_led6.SetBitmap(m_grey);
+	m_led7.SetBitmap(m_grey);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// EXCEPTION: OCX Property Pages should return FALSE
 }
