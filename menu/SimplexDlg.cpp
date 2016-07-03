@@ -368,7 +368,7 @@ void CSimplexDlg::SystemTime()
 
 BOOL CSimplexDlg::OnInitDialog()
 {
-	CDialogExnInitDialog();
+	CDialogEx::OnInitDialog();
 
 	// TODO:  Add extra initialization here
 	font.CreatePointFont(110, _T("微软雅黑")); //创建字体样式，传递110请求11点字体
