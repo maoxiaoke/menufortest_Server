@@ -153,13 +153,13 @@ BOOL CmenuDlg::OnInitDialog()
 	SetMenu(&m_menu);
 
 	/********************************设置字体******************************************/
-	font.CreatePointFont(100, _T("微软雅黑")); //创建字体样式，传递100请求10点字体
-	GetDlgItem(IDC_RECODE_STATIC)->SetFont(&font); //将字体传递给静态框
-	GetDlgItem(IDC_IP_STATIC)->SetFont(&font); //将字体传递给静态框
-	GetDlgItem(IDC_PORT_STATIC)->SetFont(&font); //将字体传递给静态框
+	font[0].CreatePointFont(100, _T("微软雅黑")); //创建字体样式，传递100请求10点字体
+	GetDlgItem(IDC_RECODE_STATIC)->SetFont(&font[0]); //将字体传递给静态框
+	GetDlgItem(IDC_IP_STATIC)->SetFont(&font[0]); //将字体传递给静态框
+	GetDlgItem(IDC_PORT_STATIC)->SetFont(&font[0]); //将字体传递给静态框
 
-	font.CreatePointFont(120, _T("微软雅黑")); //创建字体样式，传递120请求12点字体
-	GetDlgItem(IDC_NUAA_STATIC)->SetFont(&font); //将字体传递给静态框
+	font[1].CreatePointFont(120, _T("微软雅黑")); //创建字体样式，传递120请求12点字体
+	GetDlgItem(IDC_NUAA_STATIC)->SetFont(&font[1]); //将字体传递给静态框
 
 
 	//添加热键

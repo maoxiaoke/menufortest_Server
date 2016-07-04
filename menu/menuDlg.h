@@ -101,7 +101,7 @@ public:
 	afx_msg void OnStatusdisplay();
 	afx_msg void OnParaset();
 
-	CFont font;
+	CFont font[2];
 	afx_msg void OnLogout();
 	afx_msg void OnBnClickedCleanupButton();
 };
