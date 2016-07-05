@@ -5,7 +5,8 @@
 #include "ParameterSet.h"
 #include "StatusDisplayDlg.h"
 
-void ThreadFuncS(LPVOID lpParam); //类外声明线程函数
+//void ThreadFuncS(LPVOID lpParam); //类外声明线程函数
+UINT ThreadFuncS(LPVOID lpParam);
 
 // CSimplexDlg 对话框
 
@@ -72,4 +73,5 @@ public:
 
 	int StopFlagS;
 	virtual BOOL OnInitDialog();
+	inline void endSystem();
 };

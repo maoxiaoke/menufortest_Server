@@ -101,6 +101,7 @@ ON_COMMAND(ID_StatusDisplay, &CmenuDlg::OnStatusdisplay)
 ON_COMMAND(ID_ParaSet, &CmenuDlg::OnParaset)
 ON_COMMAND(ID_LOGOUT, &CmenuDlg::OnLogout)
 ON_BN_CLICKED(IDC_CLEANUP_BUTTON, &CmenuDlg::OnBnClickedCleanupButton)
+ON_COMMAND(ID_ENDSYSTEM, &CmenuDlg::OnEndsystem)
 END_MESSAGE_MAP()
 
 
@@ -767,6 +768,8 @@ void CmenuDlg::OnBootsystem()
 	CTime tm; 
 	
 	//参数初始化
+	endSystemFlag = 0;
+
 	SetTransmitterParameters = 0;
 	SetControlParameters = 0;
 	SetReceiverParameters = 0;
@@ -843,7 +846,7 @@ void CmenuDlg::OnBootsystem()
 				tm = CTime::GetCurrentTime(); //获取系统当前时间
 				strTime = tm.Format("%Y.%m.%d %X"); //格式转换
 				m_Hist.SetSel(m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				m_Hist.ReplaceSel(strTime + "\r\n" + _T("双工协议仿真\r\n")); //替换当前文本
+				m_Hist.ReplaceSel(strTime + "\r\n" + _T("Start Duplex Operation.\r\n")); //替换当前文本
 				//		MessageBox(strTime);
 				m_parameterset.GetSendAParameterValue(1);		//获得参数设置界面参数（发射机参数）
 				m_parameterset.GetReceiveAParameterValue(1); //获得接收机参数
@@ -858,7 +861,7 @@ void CmenuDlg::OnBootsystem()
 				tm = CTime::GetCurrentTime(); //获取系统当前时间
 				strTime = tm.Format("%Y.%m.%d %X"); //格式转换
 				m_Hist.SetSel(m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				m_Hist.ReplaceSel(strTime + "\r\n" + _T("半双工协议仿真\r\n")); //替换当前文本
+				m_Hist.ReplaceSel(strTime + "\r\n" + _T("Start HalfDuplex Operation.\r\n")); //替换当前文本
 				//		MessageBox(strTime);
 				m_parameterset.GetSendAParameterValue(1);		//获得参数设置界面参数（发射机参数）
 				m_parameterset.GetReceiveAParameterValue(1); //获得接收机参数
@@ -871,7 +874,7 @@ void CmenuDlg::OnBootsystem()
 				tm = CTime::GetCurrentTime(); //获取系统当前时间
 				strTime = tm.Format("%Y.%m.%d %X"); //格式转换
 				m_Hist.SetSel(m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				m_Hist.ReplaceSel(strTime + "\r\n" + _T("单工协议仿真\r\n")); //替换当前文本
+				m_Hist.ReplaceSel(strTime + "\r\n" + _T("Start Simplex Operation.\r\n")); //替换当前文本
 				//		MessageBox(strTime);
 				m_parameterset.GetSendAParameterValue(1);		//获得参数设置界面参数（发射机参数）
 				m_parameterset.GetReceiveAParameterValue(1); //获得接收机参数
@@ -899,11 +902,11 @@ void CmenuDlg::OperatingRecord()
 	strTime = tm.Format("%Y.%m.%d %X"); //格式转换
 	if (runandstopflag)
 	{
-		m_Hist.ReplaceSel(strTime + "\r\n" + _T("启动系统\r\n"));
+		m_Hist.ReplaceSel(strTime + "\r\n" + _T("Boot the System.\r\n"));
 	}
 	else
 	{
-		m_Hist.ReplaceSel(strTime + "\r\n" + _T("停止系统\r\n"));
+		m_Hist.ReplaceSel(strTime + "\r\n" + _T("Terminate the System.\r\n"));
 	}
 	
 }
@@ -921,7 +924,7 @@ void CmenuDlg::OnBnClickedStartmonitorButton()
 //	sPort = GetDlgItemInt(IDC_SPORT_EDIT);//也可以这样获取端口号
 	if (sPort <= 1024 || sPort > 65535)
 	{
-		MessageBox(_T("请输入合适的端口号！（1025~65535）"));
+		MessageBox(_T("Please Input the Valid Port ID！（1025~65535）"));
 		SetDlgItemText(IDC_SPORT_EDIT, _T(""));
 //		SetDlgItemInt(IDC_SPORT_EDIT, 1026); 这样也可以
 		GetDlgItem(IDC_SPORT_EDIT)->SetFocus(); //设置窗口焦点，意思就是不用鼠标点击文本框光标就会自动定位到文本框里
@@ -934,7 +937,7 @@ void CmenuDlg::OnBnClickedStartmonitorButton()
 	CString str;
 	str = SystemTime();
 	m_Hist.SetSel(m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-	m_Hist.ReplaceSel(str + "\r\n" + _T("监听开始\r\n")+_T("地址")+ sIP + _T("端口")+ sP+"\r\n"+_T("等待客户连接……\r\n")); //替换当前文本
+	m_Hist.ReplaceSel(str + "\r\n" + _T("Start Listening\r\n")+_T("Address: ")+ sIP + _T("Pord ID: ")+ sP+"\r\n"+_T("Awaiting the Clients to Connect…….\r\n")); //替换当前文本
 
 	//控件禁用
 	ServerIP.EnableWindow(false);
@@ -1018,4 +1021,11 @@ void CmenuDlg::OnBnClickedCleanupButton()
 {
 	// TODO: Add your control notification handler code here
 	SetDlgItemText(IDC_HIST_EDIT, _T(" "));
+}
+
+
+void CmenuDlg::OnEndsystem()
+{
+	// TODO: Add your command handler code here
+	endSystemFlag = 1;
 }

@@ -8,6 +8,9 @@
 #include "stdafx.h"
 #include "TransRevShare.h"
 
+/***************标识符**********************/
+int endSystemFlag;				//终止系统标识符
+int validframeflag;					//收到有效帧标识
 /***************指令帧**********************/
 int UorP;						//选择发送U帧还是P帧
 int messagestate;		//有无数据发送

@@ -51,9 +51,6 @@
     <ClInclude Include="SystemParameter.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="HalfDuplexFunction.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="TransRevShare.h">
       <Filter>头文件</Filter>
     </ClInclude>

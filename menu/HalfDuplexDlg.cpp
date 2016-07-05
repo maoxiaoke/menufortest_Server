@@ -5,7 +5,7 @@
 #include "menu.h"
 #include "HalfDuplexDlg.h"
 #include "afxdialogex.h"
-#include "HalfDuplexFunction.h"
+//#include "HalfDuplexFunction.h"
 #include "menuDlg.h"
 #include "TransRevShare.h"
 #include "SystemParameter.h"
@@ -144,12 +144,22 @@ int CHalfDuplexDlg::StartRunHalfDuplex(int a)
 	state_inactiveH = 1;   //初始状态
 	m_led1.SetBitmap(m_red);
 
-	hThread = CreateThread(NULL,
-		0,
-		(LPTHREAD_START_ROUTINE)ThreadFuncH,
-		this,
-		0,
-		&ThreadID); //开辟一个线程
+	//hThread = CreateThread(NULL,
+	//	0,
+	//	(LPTHREAD_START_ROUTINE)ThreadFuncH,
+	//	this,
+	//	0,
+	//	&ThreadID); //开辟一个线程
+
+	CWinThread * m_pThread;
+	m_pThread = AfxBeginThread(ThreadFuncH, this, THREAD_PRIORITY_NORMAL, 0, 0, NULL);
+	if (NULL == m_pThread)
+	{
+		CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+		SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Error in Begin a Thread.\r\n"));
+	}
 
 	return 0; //定义的是有返回值的函数，所以需要return 0
 }
@@ -177,7 +187,8 @@ int CHalfDuplexDlg::SetLedOff(int a)
 	return 0;
 }
 
-void ThreadFuncH(LPVOID lpParam)
+//void ThreadFuncH(LPVOID lpParam)
+UINT ThreadFuncH(LPVOID lpParam)
 {
 	CHalfDuplexDlg *pDlg = (CHalfDuplexDlg*)lpParam;
 	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
@@ -189,6 +200,11 @@ void ThreadFuncH(LPVOID lpParam)
 		switch (pDlg->HalfDuplexState)
 		{
 		case 2:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_waithailH = 1;
 
 			pDlg->SystemTime();
@@ -199,6 +215,10 @@ void ThreadFuncH(LPVOID lpParam)
 			pDlg->oldTickCount = GetTickCount();
 			while (1)
 			{
+				if (endSystemFlag)
+				{
+					break;
+				}
 				pDlg->newTickCount = GetTickCount();
 				if (Start_Hail_R)
 				{
@@ -226,6 +246,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 51:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_carrieronlyH = 1;
 
 			pDlg->SystemTime();
@@ -238,6 +263,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 52:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_acquisitionH = 1;
 
 			pDlg->SystemTime();
@@ -250,6 +280,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 50:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_senddataH = 1;
 
 			pDlg->SystemTime();
@@ -263,6 +298,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 56:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_tokenexchangeH = 1;
 
 			pDlg->SystemTime();
@@ -275,6 +315,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 58:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_tailswitchH= 1;
 
 			pDlg->SystemTime();
@@ -287,6 +332,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 62:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_waitcarrierH = 1;
 
 			pDlg->SystemTime();
@@ -306,6 +356,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 61:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_waitfirstframeH = 1;
 
 			pDlg->SystemTime();
@@ -316,6 +371,10 @@ void ThreadFuncH(LPVOID lpParam)
 			pDlg->oldTickCount = GetTickCount();
 			while (1)
 			{
+				if (endSystemFlag)
+				{
+					break;
+				}
 				pDlg->newTickCount = GetTickCount();
 				if (CarrierSend_R)
 				{
@@ -333,6 +392,11 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 
 		case 60:
+			if (endSystemFlag)
+			{
+				endSystemFlag = 0;
+				pDlg->endSystem();
+			}
 			pDlg->state_receiveDataH = 1;
 
 			pDlg->SystemTime();
@@ -368,260 +432,10 @@ void ThreadFuncH(LPVOID lpParam)
 			break;
 		}
 	}
-
+	return 0;
 }
 
 
-//void ThreadFuncH(LPVOID lpParam)
-//{
-//	CHalfDuplexDlg *pDlg = (CHalfDuplexDlg*)lpParam;
-//	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-//
-//	while (StopFlagH == 0)
-//	{
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_inactiveH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led1.SetBitmap(hBmp);
-//			if (state_inactiveH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_waithailH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led2.SetBitmap(hBmp);
-//
-//			SystemTimeH();  //调用获取系统时间函数
-//
-//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			ppDlg->m_Hist.ReplaceSel(_T("等待握手\r\n"));
-//
-//			if (state_waithailH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//
-//		while (1)
-//		{
-//			if (Start_Hail_R == 1)
-//			{
-//				Start_Hail_R = 0;
-//				break;
-//			}
-//			if (StopFlagH == 1)
-//			{
-//				pDlg->SetLedOffH(1);
-//				return;
-//			}
-//		}
-//
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_carrieronlyH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led7.SetBitmap(hBmp);
-//
-//			HallCommond = 1;
-//			CarrierSend_T = 1;
-//			CommondGroup = SPDU_framing();
-//			encodecommond(CommondGroup);
-//			((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessagepro(P_Data_CC, Len_DataInProcess);
-//			HallCommond = 0;
-//			CarrierSend_T = 0;
-//
-//			if (state_carrieronlyH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_acquisitionH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led8.SetBitmap(hBmp);
-//			if (state_acquisitionH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			SystemTimeH();  //调用获取系统时间函数
-//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			ppDlg->m_Hist.ReplaceSel(_T("发送数据\r\n"));
-//			pDlg->banshuanggongsend();
-//
-//			state_senddataH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led9.SetBitmap(hBmp);
-//
-//
-//
-//		
-//			if (state_senddataH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_tokenexchangeH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led12.SetBitmap(hBmp);
-//			if (state_tokenexchangeH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_tailswitchH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led13.SetBitmap(hBmp);
-//			if (state_tailswitchH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_waitcarrierH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led4.SetBitmap(hBmp);
-//
-//			HallCommond = 1;
-//			WaitCarrier_T = 1;
-//			CommondGroup = SPDU_framing();
-//			encodecommond(CommondGroup);
-//			((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SendMessagepro(P_Data_CC, Len_DataInProcess);
-//			HallCommond = 0;
-//			WaitCarrier_T = 0;
-//
-//			if (state_waitcarrierH == 1) break;
-//		}
-//		while (1)
-//		{
-//			if (CarrierSend_R == 1)
-//			{
-//				CarrierSend_R = 0;
-//				break;
-//			}
-//			if (StopFlagH == 1)
-//			{
-//				pDlg->SetLedOffH(1);
-//				return;
-//			}
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_waitfirstframeH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led5.SetBitmap(hBmp);
-//			if (state_waitfirstframeH == 1) break;
-//		}
-//		if (StopFlagH == 1)
-//		{
-//			pDlg->SetLedOffH(1);
-//			break;
-//		}
-//		while (1)
-//		{
-//			Sleep(1000);
-//			state_receiveDataH = 1;
-//			CBitmap bitmap;
-//			HBITMAP hBmp;
-//			bitmap.LoadBitmap(IDB_BITMAP_RED);
-//			hBmp = (HBITMAP)bitmap.GetSafeHandle();
-//			pDlg->m_led6.SetBitmap(hBmp);
-//
-//			SystemTimeH();  //调用获取系统时间函数
-//			CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
-//			ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-//			ppDlg->m_Hist.ReplaceSel(_T("接收数据\r\n"));
-//
-//			if (state_receiveDataH == 1) break;
-//		}
-//		while (1)
-//		{
-//			if (ResponseSend_R == 1)
-//			{
-//				ResponseSend_R = 0;
-//				break;
-//			}
-//			if (StopFlagH == 1)
-//			{
-//				pDlg->SetLedOffH(1);
-//				return;
-//			}
-//		}
-//	
-//		Sleep(2000);
-//		pDlg->SetLedOffH(1); //将LED灯置黑
-//		break;
-//	}
-//}
 void CHalfDuplexDlg::banshuanggongsend()
 {
 	int *temp, *temp2;
@@ -779,6 +593,10 @@ void CHalfDuplexDlg::banshuanggongsend()
 
 	while (1)
 	{
+		if (endSystemFlag)
+		{
+			break;
+		}
 		if (commondstate == 0)					 //判断此时没有指令发送
 		{
 			messagestate = 1;						//此时发送数据
@@ -854,7 +672,10 @@ void CHalfDuplexDlg::banshuanggongsend()
 		num_frame = ResendNumber_R + 1;
 		Sleep(4000);
 		}*/
-
+		if (endSystemFlag)
+		{
+			break;
+		}
 		if (n == h)
 		{
 			break;
@@ -1082,4 +903,13 @@ void CHalfDuplexDlg::arqsend(int framecounter)
 		break;
 
 	}
+}
+void CHalfDuplexDlg::endSystem()
+{
+	SetLedOff(1);
+	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+	SystemTime();
+	ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+	ppDlg->m_Hist.ReplaceSel(_T("End the Thread.\r\n"));
+	AfxEndThread(0, TRUE);
 }

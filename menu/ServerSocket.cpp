@@ -123,7 +123,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 				CString str;
 				str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧ASM出错！\r\n")); //替换当前文本
+				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of ASM！\r\n")); //替换当前文本
 				return;
 			}
 			else if (Errorbit != 0)
@@ -150,7 +150,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 				CString str;
 				str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧CRC出错！\r\n")); //替换当前文本
+				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of CRC！\r\n")); //替换当前文本
 				return;
 			}
 			else if (NeedSerialNumber != SerialNumber1)
@@ -177,7 +177,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 				CString str;
 				str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧帧号出错！\r\n")); //替换当前文本
+				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of Frame Seq Num！\r\n")); //替换当前文本
 				return;
 			}
 			else
@@ -283,7 +283,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 							CString str;
 							str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 							((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-							((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧帧号出错！\r\n")); //替换当前文本
+							((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of Frame Seq Num！\r\n")); //替换当前文本
 						}
 					}
 					else
@@ -299,7 +299,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 						CString str;
 						str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧CRC出错！\r\n")); //替换当前文本
+						((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of CRC！\r\n")); //替换当前文本
 					}
 					break;
 				}
@@ -317,7 +317,7 @@ void CServerSocket::OnReceive(int nErrorCode)
 				CString str;
 				str = ((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->SystemTime();
 				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("当前帧ASM出错！\r\n")); //替换当前文本
+				((CmenuDlg*)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Error of ASM！\r\n")); //替换当前文本
 			}
 			double missrate = 100 * missnumber / NeedSerialNumber;
 			CString missrate_R;
@@ -394,7 +394,7 @@ void CServerSocket::OnClose(int nErrorCode)
 	CString str;
 	str = ((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->SystemTime();
 	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("客户端断开连接\r\n")); //替换当前文本
+	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Disconnet With the Client.\r\n")); //替换当前文本
 
 	Close();
 	//控件禁用

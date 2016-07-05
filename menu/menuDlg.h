@@ -104,4 +104,5 @@ public:
 	CFont font[2];
 	afx_msg void OnLogout();
 	afx_msg void OnBnClickedCleanupButton();
+	afx_msg void OnEndsystem();
 };

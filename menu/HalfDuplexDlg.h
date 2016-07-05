@@ -5,7 +5,8 @@
 
 
 // CHalfDuplexDlg 对话框
-void ThreadFuncH(LPVOID lpParam); //类外声明线程函数
+//void ThreadFuncH(LPVOID lpParam); //类外声明线程函数
+UINT ThreadFuncH(LPVOID lpParam);
 
 class CHalfDuplexDlg : public CDialogEx
 {
@@ -84,4 +85,5 @@ public:
 
 	int HalfDuplexState;			//当前全双工状态
 	UINT oldTickCount, newTickCount;
+	inline void endSystem();
 };

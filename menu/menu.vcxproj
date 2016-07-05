@@ -109,7 +109,6 @@
     <ClInclude Include="FileViewDlg.h" />
     <ClInclude Include="Framing.h" />
     <ClInclude Include="HalfDuplexDlg.h" />
-    <ClInclude Include="HalfDuplexFunction.h" />
     <ClInclude Include="ListenSocket.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="menuDlg.h" />

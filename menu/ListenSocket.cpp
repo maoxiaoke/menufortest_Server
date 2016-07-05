@@ -32,7 +32,7 @@ void CListenSocket::OnAccept(int nErrorCode)
 	CString str;
 	str = ((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->SystemTime();
 	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.SetSel(((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
-	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("接收了一个客户端的连接请求\r\n")); //替换当前文本
+	((CmenuDlg  *)(AfxGetApp()->m_pMainWnd))->m_Hist.ReplaceSel(str + "\r\n" + _T("Receive a Request of a Client.\r\n")); //替换当前文本
 
 	//控件禁用
 

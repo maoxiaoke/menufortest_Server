@@ -85,12 +85,21 @@ int CSimplexDlg::StartRunSimplex(int a)
 	state_inactiveR = 1;   //初始状态
 	m_led1.SetBitmap(m_red);
 
-	hThread = CreateThread(NULL,
-		0,
-		(LPTHREAD_START_ROUTINE)ThreadFuncS,
-		this,
-		0,
-		&ThreadID); //开辟一个线程
+	//hThread = CreateThread(NULL,
+	//	0,
+	//	(LPTHREAD_START_ROUTINE)ThreadFuncS,
+	//	this,
+	//	0,
+	//	&ThreadID); //开辟一个线程
+	CWinThread * m_pThread;
+	m_pThread = AfxBeginThread(ThreadFuncS, this, THREAD_PRIORITY_NORMAL, 0, 0, NULL);
+	if (NULL == m_pThread)
+	{
+		CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+		SystemTime();
+		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+		ppDlg->m_Hist.ReplaceSel(_T("Error in Begin a Thread.\r\n"));
+	}
 
 	return 0; //定义的是有返回值的函数，所以需要return 0
 }
@@ -108,13 +117,19 @@ int CSimplexDlg::SetLedOff(int a)
 
 	return 0;
 }
-void ThreadFuncS(LPVOID lpParam)
+//void ThreadFuncS(LPVOID lpParam)
+UINT ThreadFuncS(LPVOID lpParam)
 {
 	CSimplexDlg *pDlg = (CSimplexDlg*)lpParam;
 	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
 
 	while (1)
 	{
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_waithailR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
@@ -126,6 +141,10 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->oldTickCount = GetTickCount();
 		while (1)
 		{
+			if (endSystemFlag)
+			{
+				break;
+			}
 			pDlg->newTickCount = GetTickCount();
 			if (CarrierSend_R)
 			{
@@ -141,6 +160,11 @@ void ThreadFuncS(LPVOID lpParam)
 			}
 		}
 
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_acquisitionR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
@@ -149,6 +173,11 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->m_led3.SetBitmap(pDlg->m_red);
 		Sleep(1000);
 
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_simplexronR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
@@ -160,6 +189,10 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->oldTickCount = GetTickCount();
 		while (1)
 		{
+			if (endSystemFlag)
+			{
+				break;
+			}
 			pDlg->newTickCount = GetTickCount();
 			if (RNMD_R)
 			{
@@ -173,12 +206,22 @@ void ThreadFuncS(LPVOID lpParam)
 
 		}
 
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_rnmdendR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
 		ppDlg->m_Hist.ReplaceSel(_T("Receive RNMD.\r\n"));
 		pDlg->m_led5.SetBitmap(pDlg->m_red);
 
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_simplexrendR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
@@ -186,6 +229,11 @@ void ThreadFuncS(LPVOID lpParam)
 		pDlg->m_led6.SetBitmap(pDlg->m_red);
 		Sleep(2000);
 
+		if (endSystemFlag)
+		{
+			endSystemFlag = 0;
+			pDlg->endSystem();
+		}
 		pDlg->state_terminatingtailR = 1;
 		pDlg->SystemTime();
 		ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
@@ -200,6 +248,7 @@ void ThreadFuncS(LPVOID lpParam)
 
 		
 	}
+	return 0;
 
 }
 
@@ -242,4 +291,13 @@ BOOL CSimplexDlg::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+void CSimplexDlg::endSystem()
+{
+	SetLedOff(1);
+	CmenuDlg *ppDlg = (CmenuDlg*)AfxGetApp()->m_pMainWnd;
+	SystemTime();
+	ppDlg->m_Hist.SetSel(ppDlg->m_Hist.GetWindowTextLength(), -1); //获取当前编辑框字符
+	ppDlg->m_Hist.ReplaceSel(_T("End the Thread.\r\n"));
+	AfxEndThread(0, TRUE);
 }
